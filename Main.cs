@@ -4,24 +4,32 @@ using System.IO;
 using Newtonsoft.Json;
 using System;
 using System.Diagnostics;
+using UnityEngine.XR;
 
 namespace MelonAutoLaunch
 {
     public class Main : MelonMod
     {
         internal static readonly MelonLogger.Instance mlog = new MelonLogger.Instance("MelonAutoLaunch", ConsoleColor.DarkGreen);
-        public static readonly string ConfigPath = $"{Environment.CurrentDirectory}{System.IO.Path.DirectorySeparatorChar}UserData{System.IO.Path.DirectorySeparatorChar}AutoStartConfig.json";
-        public List<Process> ProcessesCloseOnQuit = new List<Process>();
+        private static readonly string ConfigPath = $"{Environment.CurrentDirectory}{System.IO.Path.DirectorySeparatorChar}UserData{System.IO.Path.DirectorySeparatorChar}AutoStartConfig.json";
+        private List<Process> ProcessesCloseOnQuit = new List<Process>();
+        private bool isOnVR;
 
         public override void OnApplicationStart()
         {
+            isOnVR = XRDevice.isPresent;
             try { CheckIfConfigFileExists(); } catch (Exception e) { mlog.Error(e); }
 
             Programs programs = JsonConvert.DeserializeObject<Programs>(File.ReadAllText(ConfigPath));
 
             foreach (ProgramInfo p in programs.ProgramList)
             {
-                Process current = RunProgram(p.FilePath.Replace("/", "\\"), p.Arguments, p.WorkingDirectory);
+                Process current = null;
+                if (p.VROnly && isOnVR || !p.VROnly)
+                    current = RunProgram(p.FilePath.Replace("/", "\\"), p.Arguments, p.WorkingDirectory);
+                else
+                    mlog.Msg(String.Format("not launching {0}, it is marked VR Only.", p.FilePath));
+
                 if (p.CloseOnQuit && current != null)
                     ProcessesCloseOnQuit.Add(current);
             }
@@ -32,11 +40,10 @@ namespace MelonAutoLaunch
             mlog.Msg("Closing Programs...");
             foreach (Process p in ProcessesCloseOnQuit)
             {
-                try
-                {
+                try {
                     mlog.Msg("Closing " + p.ProcessName);
                     p.CloseMainWindow();
-                } catch (InvalidOperationException e) { mlog.Msg("Process already closed."); 
+                } catch (InvalidOperationException e) { mlog.Warning("Process already closed."); 
                 } catch (Exception e) { mlog.Error(e); }
             }
         }
@@ -52,7 +59,8 @@ namespace MelonAutoLaunch
                             FilePath = "",
                             Arguments = "",
                             WorkingDirectory = "",
-                            CloseOnQuit = false
+                            CloseOnQuit = false,
+                            VROnly = true
                         }
                     }
                 }, Formatting.Indented));
@@ -67,7 +75,7 @@ namespace MelonAutoLaunch
 
             if (!File.Exists(filePath))
             {
-                mlog.Msg(String.Format("File '{0}' does not exist!", filePath));
+                mlog.Warning(String.Format("File '{0}' does not exist!", filePath));
             }
             else
             {
@@ -97,5 +105,6 @@ namespace MelonAutoLaunch
         public string Arguments { get; set; }
         public string WorkingDirectory { get; set; }
         public bool CloseOnQuit { get; set; }
+        public bool VROnly { get; set; }
     }
 }
