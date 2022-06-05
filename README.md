@@ -53,4 +53,4 @@ Need to install MelonLoader?<br>
 Click [this link](https://melonwiki.xyz/#/?id=automated-installation) to get started!
 
 ### Prerequisites
-MelonLoader: v0.5.4+<br>
+MelonLoader: v0.5.4<br>
