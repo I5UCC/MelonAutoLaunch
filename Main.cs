@@ -28,7 +28,7 @@ namespace MelonAutoLaunch
                 if (p.VROnly && isOnVR || !p.VROnly)
                     current = RunProgram(p.FilePath.Replace("/", "\\"), p.Arguments, p.WorkingDirectory);
                 else
-                    mlog.Msg(String.Format("not launching {0}, it is marked VR Only.", p.FilePath));
+                    mlog.Msg(String.Format("not launching {0}, it is tagged VR Only.", p.FilePath));
 
                 if (p.CloseOnQuit && current != null)
                     ProcessesCloseOnQuit.Add(current);
