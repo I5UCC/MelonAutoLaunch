@@ -2,7 +2,7 @@
 A universal melonloader mod that automatically launches specified external programs on startup of the game.
 
 # Usage
-To add a program to your Autolaunch, you need to edit the VRChat/UserData/AutoStartConfig.json file. This file is being generated right when you start the game with the mod installed for the first time.
+To add a program to your Autolaunch, you need to edit the [GameFolder]/UserData/AutoStartConfig.json file. This file is being generated right when you start the game with the mod installed for the first time.
 It looks the following:
 ```
 {
