@@ -1,0 +1,14 @@
+﻿using System.Reflection;
+using MelonLoader;
+using System.Runtime.InteropServices;
+
+[assembly: AssemblyTitle("MelonAutoLaunch")]
+[assembly: AssemblyDescription("Automatically launches specified External Programs on startup of the game.")]
+[assembly: AssemblyProduct("MelonAutoLaunch")]
+[assembly: AssemblyCopyright("Copyright ©  2022")]
+[assembly: ComVisible(false)]
+[assembly: Guid("3e346bcb-8bc0-407a-a43a-8cd14b2e312e")]
+[assembly: AssemblyVersion("1.0")]
+[assembly: AssemblyFileVersion("1.0")]
+[assembly: MelonInfo(typeof(MelonAutoLaunch.Main), "MelonAutoLaunch", "1.0", "I5UCC")]
+[assembly: MelonGame("VRChat", "VRChat")]
