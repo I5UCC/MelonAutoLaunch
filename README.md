@@ -3,7 +3,7 @@ A universal melonloader mod that automatically launches specified external progr
 
 # Usage
 To add a program to your Autolaunch, you need to edit the VRChat/UserData/AutoStartConfig.json file. This file is being generated right when you start VRChat with the mod installed for the first time.
-It uses following syntax:
+It looks the following:
 ```
 {
   "ProgramList": [
@@ -16,10 +16,10 @@ It uses following syntax:
   ]
 }
 ```
-You need to add the ***full path*** to executable (.exe file) to "FilePath" <br>
-Arguments, if you have anyone, can leave empty.
-WorkingDirectory is the directory of your executable by default, add a path here if needed.
-CloseOnQuit determines if the program should close whenever the game is closed. Values are either false or true.
+***"FilePath":*** You need to add the **full path** to executable (.exe file) <br>
+***"Arguments":*** if you need any, can leave empty.  <br>
+***"WorkingDirectory":*** is the directory of your executable by default, add a path here if needed.  <br>
+***"CloseOnQuit":*** determines if the program should close whenever the game is closed. Values are either false or true.  <br>
 
 ### Example:
 
