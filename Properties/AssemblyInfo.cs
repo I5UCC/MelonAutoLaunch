@@ -11,4 +11,4 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyVersion("1.0")]
 [assembly: AssemblyFileVersion("1.0")]
 [assembly: MelonInfo(typeof(MelonAutoLaunch.Main), "MelonAutoLaunch", "1.0", "I5UCC")]
-[assembly: MelonGame("VRChat", "VRChat")]
+[assembly: MelonGame(null, null)]
