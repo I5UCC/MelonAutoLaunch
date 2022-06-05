@@ -22,7 +22,7 @@ namespace MelonAutoLaunch
             foreach (ProgramInfo p in programs.ProgramList)
             {
                 Process current = RunProgram(p.FilePath.Replace("/", "\\"), p.Arguments, p.WorkingDirectory);
-                if (p.CloseOnQuit)
+                if (p.CloseOnQuit && current != null)
                     ProcessesCloseOnQuit.Add(current);
             }
         }
