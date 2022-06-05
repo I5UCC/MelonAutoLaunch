@@ -32,8 +32,12 @@ namespace MelonAutoLaunch
             mlog.Msg("Closing Programs...");
             foreach (Process p in ProcessesCloseOnQuit)
             {
-                mlog.Msg("Closing " + p.ProcessName);
-                try { p.CloseMainWindow(); } catch (Exception e) { mlog.Error(e); }
+                try
+                {
+                    mlog.Msg("Closing " + p.ProcessName);
+                    p.CloseMainWindow();
+                } catch (InvalidOperationException e) { mlog.Msg("Process already closed."); 
+                } catch (Exception e) { mlog.Error(e); }
             }
         }
 
