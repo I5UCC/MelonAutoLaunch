@@ -11,7 +11,8 @@ It looks as follows:
       "FilePath": "",
       "Arguments": "",
       "WorkingDirectory": "",
-      "CloseOnQuit": false
+      "CloseOnQuit": false,
+      "VROnly": true
     }
   ]
 }
@@ -20,6 +21,7 @@ It looks as follows:
 ***"Arguments":*** if you need any, can leave empty.  <br>
 ***"WorkingDirectory":*** is the directory of your executable by default, add a path here if needed.  <br>
 ***"CloseOnQuit":*** determines if the program should close whenever the game is closed. Values are either false or true.  <br>
+***"VROnly":*** determines if the program should be autostarted only in VR or always.
 
 ### Example:
 
@@ -30,19 +32,22 @@ It looks as follows:
       "FilePath": "path/to/executable1",
       "Arguments": "",
       "WorkingDirectory": "",
-      "CloseOnQuit": false
+      "CloseOnQuit": false,
+      "VROnly": true
     },
     {
       "FilePath": "path/to/executable2",
       "Arguments": "",
       "WorkingDirectory": "path/to/Working/Directory2",
-      "CloseOnQuit": true
+      "CloseOnQuit": true,
+      "VROnly": false
     },
     {
       "FilePath": "path/to/executable3",
       "Arguments": "--debug",
       "WorkingDirectory": "path/to/Working/Directory3",
-      "CloseOnQuit": true
+      "CloseOnQuit": true,
+      "VROnly": true
     }
   ]
 }
