@@ -21,7 +21,7 @@ It looks as follows:
 ***"Arguments":*** if you need any, can leave empty.  <br>
 ***"WorkingDirectory":*** is the directory of your executable by default, add a path here if needed.  <br>
 ***"CloseOnQuit":*** determines if the program should close whenever the game is closed. Values are either false or true.  <br>
-***"VROnly":*** determines if the program should be autostarted only in VR or always.
+***"VROnly":*** determines if the program should be autostarted only in VR or always. Values are either false or true.
 
 ### Example:
 
