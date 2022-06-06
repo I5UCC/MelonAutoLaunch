@@ -1,5 +1,6 @@
 # MelonAutoLaunch
 A universal melonloader mod that automatically launches specified external programs on startup of the game.
+Useful if you for example have alot of OSC programs for VRChat that you would otherwise have to open and close manually every time.
 
 Please be aware that usage of mods breaks ToS of games like VRChat and can lead to ban. Use at your own risk.
 
