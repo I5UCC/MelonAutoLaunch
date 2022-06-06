@@ -5,8 +5,7 @@ Please be aware that usage of mods breaks ToS of games like VRChat and can lead 
 
 # Current Issues
 
-- CloseOnQuit programs close every time Melonpreferences are saved instead of every time the application is closed. 
-  - OnApplicationQuit() doesnt seem to be called when the application is closed.
+- CloseOnQuit programs do not actually close with the game. OnApplicationQuit() doesnt seem to be called.
 
 # Usage
 To add a program to your Autolaunch, you need to edit the [GameFolder]/UserData/AutoStartConfig.json file. This file is being generated right when you start the game with the mod installed for the first time. <br>
