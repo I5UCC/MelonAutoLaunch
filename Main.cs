@@ -41,16 +41,21 @@ namespace MelonAutoLaunch
             }
         }
 
-        public override void OnPreferencesSaved()
+        public override void OnApplicationQuit()
         {
             mlog.Msg("Closing Programs...");
             foreach (Process p in ProcessesCloseOnQuit)
             {
-                try {
+                try
+                {
                     mlog.Msg("Closing " + p.ProcessName);
                     p.CloseMainWindow();
-                } catch (InvalidOperationException e) { mlog.Warning("Process already closed."); 
-                } catch (Exception e) { mlog.Error(e); }
+                }
+                catch (InvalidOperationException e)
+                {
+                    mlog.Warning("Process already closed.");
+                }
+                catch (Exception e) { mlog.Error(e); }
             }
         }
 
