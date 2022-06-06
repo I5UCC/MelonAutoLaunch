@@ -3,6 +3,11 @@ A universal melonloader mod that automatically launches specified external progr
 
 Please be aware that usage of mods breaks ToS of games like VRChat and can lead to ban. Use at your own risk.
 
+# Current Issues
+
+- CloseOnQuit programs close every time Melonpreferences are saved instead every time the application is closed. 
+  - OnApplicationQuit() doesnt seem to be called when the application is closed.
+
 # Usage
 To add a program to your Autolaunch, you need to edit the [GameFolder]/UserData/AutoStartConfig.json file. This file is being generated right when you start the game with the mod installed for the first time. <br>
 It looks as follows: 
