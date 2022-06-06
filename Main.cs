@@ -14,24 +14,30 @@ namespace MelonAutoLaunch
         private static readonly string ConfigPath = $"{Environment.CurrentDirectory}{System.IO.Path.DirectorySeparatorChar}UserData{System.IO.Path.DirectorySeparatorChar}AutoStartConfig.json";
         private List<Process> ProcessesCloseOnQuit = new List<Process>();
         private bool isOnVR;
+        private bool isIntitialized;
 
-        public override void OnApplicationStart()
+        public override void OnSceneWasLoaded(int buildIndex, string sceneName)
         {
-            isOnVR = XRDevice.isPresent;
-            try { CheckIfConfigFileExists(); } catch (Exception e) { mlog.Error(e); }
-
-            Programs programs = JsonConvert.DeserializeObject<Programs>(File.ReadAllText(ConfigPath));
-
-            foreach (ProgramInfo p in programs.ProgramList)
+            if (buildIndex != 0 && !isIntitialized)
             {
-                Process current = null;
-                if (p.VROnly && isOnVR || !p.VROnly)
-                    current = RunProgram(p.FilePath.Replace("/", "\\"), p.Arguments, p.WorkingDirectory);
-                else
-                    mlog.Msg(String.Format("not launching {0}, it is tagged VR Only.", p.FilePath));
+                isOnVR = XRDevice.isPresent;
 
-                if (p.CloseOnQuit && current != null)
-                    ProcessesCloseOnQuit.Add(current);
+                try { CheckIfConfigFileExists(); } catch (Exception e) { mlog.Error(e); }
+
+                Programs programs = JsonConvert.DeserializeObject<Programs>(File.ReadAllText(ConfigPath));
+
+                foreach (ProgramInfo p in programs.ProgramList)
+                {
+                    Process current = null;
+                    if (p.VROnly && isOnVR || !p.VROnly)
+                        current = RunProgram(p.FilePath.Replace("/", "\\"), p.Arguments, p.WorkingDirectory);
+                    else
+                        mlog.Msg(String.Format("not launching {0}, it is tagged VR Only.", p.FilePath));
+
+                    if (p.CloseOnQuit && current != null)
+                        ProcessesCloseOnQuit.Add(current);
+                }
+                isIntitialized = true;
             }
         }
 
