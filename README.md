@@ -1,6 +1,8 @@
 # MelonAutoLaunch
 A universal melonloader mod that automatically launches specified external programs on startup of the game.
 
+Please be aware that usage of mods breaks ToS of games like VRChat and can lead to ban. Use at your own risk.
+
 # Usage
 To add a program to your Autolaunch, you need to edit the [GameFolder]/UserData/AutoStartConfig.json file. This file is being generated right when you start the game with the mod installed for the first time. <br>
 It looks as follows: 
