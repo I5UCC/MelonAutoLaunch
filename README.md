@@ -6,7 +6,7 @@ Please be aware that usage of mods breaks ToS of games like VRChat and can lead 
 
 # Issues
 
-- Programs that have CloseOnQuit set to false will cause Steam to think the game is still running.
+- Programs that are not closed when quit, will cause Steam to think the game is still running.
 
 # Usage
 To add a program to your Autolaunch, you need to edit the [GameFolder]/UserData/AutoStartConfig.json file. This file is being generated right when you start the game with the mod installed for the first time. <br>
