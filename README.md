@@ -4,7 +4,7 @@ Useful if you for example have alot of OSC programs for VRChat that you would ot
 
 Please be aware that usage of mods breaks ToS of games like VRChat and can lead to ban. Use at your own risk.
 
-# Issues
+# Known Issues
 
 - Programs that are not closed when quit, will cause Steam to think the game is still running.
 
