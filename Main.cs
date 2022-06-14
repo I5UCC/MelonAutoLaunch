@@ -49,7 +49,8 @@ namespace MelonAutoLaunch
                 try
                 {
                     mlog.Msg("Closing " + p.ProcessName);
-                    p.CloseMainWindow();
+                    foreach (Process process in Process.GetProcessesByName(p.ProcessName)) // Close all associated Processes
+                        process.CloseMainWindow();
                 }
                 catch (InvalidOperationException e)
                 {
