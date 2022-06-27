@@ -12,3 +12,4 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyFileVersion("1.0.1")]
 [assembly: MelonInfo(typeof(MelonAutoLaunch.Main), "MelonAutoLaunch", "1.0.1", "I5UCC")]
 [assembly: MelonGame(null, null)]
+[assembly: MelonOptionalDependencies("UnityEngine.VRModule")]

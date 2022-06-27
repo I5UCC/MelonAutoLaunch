@@ -13,15 +13,12 @@ namespace MelonAutoLaunch
         internal static readonly MelonLogger.Instance mlog = new MelonLogger.Instance("MelonAutoLaunch", ConsoleColor.DarkGreen);
         private static readonly string ConfigPath = $"{Environment.CurrentDirectory}{System.IO.Path.DirectorySeparatorChar}UserData{System.IO.Path.DirectorySeparatorChar}AutoStartConfig.json";
         private List<Process> ProcessesCloseOnQuit = new List<Process>();
-        private bool isOnVR;
         private bool isIntitialized;
 
         public override void OnSceneWasLoaded(int buildIndex, string sceneName)
         {
             if (buildIndex != 0 && !isIntitialized)
             {
-                isOnVR = XRDevice.isPresent;
-
                 try { CheckIfConfigFileExists(); } catch (Exception e) { mlog.Error(e); }
 
                 Programs programs = JsonConvert.DeserializeObject<Programs>(File.ReadAllText(ConfigPath));
@@ -29,7 +26,7 @@ namespace MelonAutoLaunch
                 foreach (ProgramInfo p in programs.ProgramList)
                 {
                     Process current = null;
-                    if (p.VROnly && isOnVR || !p.VROnly)
+                    if (p.VROnly && IsOnVR() || !p.VROnly)
                         current = RunProgram(p.FilePath.Replace("/", "\\"), p.Arguments, p.WorkingDirectory);
                     else
                         mlog.Msg(String.Format("not launching {0}, it is tagged VR Only.", p.FilePath));
@@ -103,6 +100,19 @@ namespace MelonAutoLaunch
                 try { return Process.Start(pInfo); } catch (Exception e) { mlog.Error(e); }
             }
             return null;
+        }
+
+        private bool IsOnVR()
+        {
+            try
+            {
+                return XRDevice.isPresent;
+            }
+            catch (Exception)
+            {
+                mlog.Warning("No VR Device Detected, assuming its a non-VR game.");
+                return false;
+            }
         }
     }
 
