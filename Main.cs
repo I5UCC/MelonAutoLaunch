@@ -49,7 +49,7 @@ namespace MelonAutoLaunch
                     foreach (Process process in Process.GetProcessesByName(p.ProcessName)) // Close all associated Processes
                         process.CloseMainWindow();
                 }
-                catch (InvalidOperationException e)
+                catch (InvalidOperationException)
                 {
                     mlog.Warning("Process already closed.");
                 }
