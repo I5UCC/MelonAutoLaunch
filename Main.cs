@@ -56,7 +56,6 @@ namespace MelonAutoLaunch
                         new ProgramInfo {
                             FilePath = string.Empty,
                             Arguments = string.Empty,
-                            WorkingDirectory = string.Empty,
                             StartMinimized = false,
                             CloseOnQuit = false,
                             VROnly = true
@@ -81,7 +80,7 @@ namespace MelonAutoLaunch
                 pSInfo = new ProcessStartInfo
                 {
                     Arguments = pInfo.Arguments,
-                    WorkingDirectory = pInfo.WorkingDirectory != string.Empty ? pInfo.WorkingDirectory : fInfo.Directory.ToString(),
+                    WorkingDirectory = fInfo.Directory.ToString(),
                     FileName = fInfo.Name,
                     WindowStyle = pInfo.StartMinimized ? ProcessWindowStyle.Minimized : ProcessWindowStyle.Normal
                 };
@@ -130,7 +129,6 @@ namespace MelonAutoLaunch
     {
         public string FilePath { get; set; }
         public string Arguments { get; set; }
-        public string WorkingDirectory { get; set; }
         public bool StartMinimized { get; set; }
         public bool CloseOnQuit { get; set; }
         public bool VROnly { get; set; }
