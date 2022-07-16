@@ -14,25 +14,22 @@ namespace MelonAutoLaunch
         private static readonly string ConfigPath = $"{Environment.CurrentDirectory}{System.IO.Path.DirectorySeparatorChar}UserData{System.IO.Path.DirectorySeparatorChar}AutoStartConfig.json";
         private List<Process> ProcessesCloseOnQuit = new List<Process>();
 
-        public override void OnSceneWasLoaded(int buildIndex, string sceneName)
+        public override void OnApplicationLateStart()
         {
-            if (buildIndex == 0)
+            try { CheckIfConfigFileExists(); } catch (Exception e) { mlog.Error(e); }
+
+            Programs programs = JsonConvert.DeserializeObject<Programs>(File.ReadAllText(ConfigPath));
+
+            foreach (ProgramInfo p in programs.ProgramList)
             {
-                try { CheckIfConfigFileExists(); } catch (Exception e) { mlog.Error(e); }
+                Process current = null;
+                if (p.VROnly && IsOnVR() || !p.VROnly)
+                    current = RunProgram(p);
+                else
+                    mlog.Msg(String.Format("not launching {0}, it is tagged VR Only.", p.FilePath));
 
-                Programs programs = JsonConvert.DeserializeObject<Programs>(File.ReadAllText(ConfigPath));
-
-                foreach (ProgramInfo p in programs.ProgramList)
-                {
-                    Process current = null;
-                    if (p.VROnly && IsOnVR() || !p.VROnly)
-                        current = RunProgram(p);
-                    else
-                        mlog.Msg(String.Format("not launching {0}, it is tagged VR Only.", p.FilePath));
-
-                    if (p.CloseOnQuit && current != null)
-                        ProcessesCloseOnQuit.Add(current);
-                }
+                if (p.CloseOnQuit && current != null)
+                    ProcessesCloseOnQuit.Add(current);
             }
         }
 
