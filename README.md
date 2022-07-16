@@ -17,7 +17,7 @@ It looks as follows:
     {
       "FilePath": "",
       "Arguments": "",
-      "WorkingDirectory": "",
+      "StartMinimized": false,
       "CloseOnQuit": false,
       "VROnly": true
     }
@@ -38,21 +38,21 @@ It looks as follows:
     {
       "FilePath": "path/to/executable1",
       "Arguments": "",
-      "WorkingDirectory": "",
+      "StartMinimized": false,
       "CloseOnQuit": false,
       "VROnly": true
     },
     {
       "FilePath": "path/to/executable2",
       "Arguments": "",
-      "WorkingDirectory": "path/to/Working/Directory2",
+      "StartMinimized": true,
       "CloseOnQuit": true,
       "VROnly": false
     },
     {
       "FilePath": "path/to/executable3",
       "Arguments": "--debug",
-      "WorkingDirectory": "path/to/Working/Directory3",
+      "StartMinimized": false,
       "CloseOnQuit": true,
       "VROnly": true
     }
