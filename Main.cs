@@ -13,11 +13,10 @@ namespace MelonAutoLaunch
         internal static readonly MelonLogger.Instance mlog = new MelonLogger.Instance("MelonAutoLaunch", ConsoleColor.DarkGreen);
         private static readonly string ConfigPath = $"{Environment.CurrentDirectory}{System.IO.Path.DirectorySeparatorChar}UserData{System.IO.Path.DirectorySeparatorChar}AutoStartConfig.json";
         private List<Process> ProcessesCloseOnQuit = new List<Process>();
-        private bool isIntitialized;
 
         public override void OnSceneWasLoaded(int buildIndex, string sceneName)
         {
-            if (buildIndex != 0 && !isIntitialized)
+            if (buildIndex == 0)
             {
                 try { CheckIfConfigFileExists(); } catch (Exception e) { mlog.Error(e); }
 
@@ -27,33 +26,23 @@ namespace MelonAutoLaunch
                 {
                     Process current = null;
                     if (p.VROnly && IsOnVR() || !p.VROnly)
-                        current = RunProgram(p.FilePath.Replace("/", "\\"), p.Arguments, p.WorkingDirectory);
+                        current = RunProgram(p);
                     else
                         mlog.Msg(String.Format("not launching {0}, it is tagged VR Only.", p.FilePath));
 
                     if (p.CloseOnQuit && current != null)
                         ProcessesCloseOnQuit.Add(current);
                 }
-                isIntitialized = true;
             }
         }
 
         public override void OnApplicationQuit()
         {
-            mlog.Msg("Closing Programs...");
-            foreach (Process p in ProcessesCloseOnQuit)
+            if(ProcessesCloseOnQuit.Count != 0)
             {
-                try
-                {
-                    mlog.Msg("Closing " + p.ProcessName);
-                    foreach (Process process in Process.GetProcessesByName(p.ProcessName)) // Close all associated Processes
-                        process.CloseMainWindow();
-                }
-                catch (InvalidOperationException)
-                {
-                    mlog.Warning("Process already closed.");
-                }
-                catch (Exception e) { mlog.Error(e); }
+                mlog.Msg("Application Quitting... Closing Programs...");
+                foreach (Process p in ProcessesCloseOnQuit)
+                    CloseProgram(p);
             }
         }
 
@@ -65,9 +54,10 @@ namespace MelonAutoLaunch
                 {
                     ProgramList = new List<ProgramInfo> {
                         new ProgramInfo {
-                            FilePath = "",
-                            Arguments = "",
-                            WorkingDirectory = "",
+                            FilePath = string.Empty,
+                            Arguments = string.Empty,
+                            WorkingDirectory = string.Empty,
+                            StartMinimized = false,
                             CloseOnQuit = false,
                             VROnly = true
                         }
@@ -76,30 +66,45 @@ namespace MelonAutoLaunch
             }
         }
 
-        private Process RunProgram(string filePath, string arguments, string workingDirectory)
+        private Process RunProgram(ProgramInfo pInfo)
         {
-            ProcessStartInfo pInfo;
+            ProcessStartInfo pSInfo;
             FileInfo fInfo;
 
-
-            if (!File.Exists(filePath))
+            if (!File.Exists(pInfo.FilePath))
             {
-                mlog.Warning(String.Format("File '{0}' does not exist!", filePath));
+                mlog.Warning(String.Format("File '{0}' does not exist!", pInfo.FilePath));
             }
             else
             {
-                fInfo = new FileInfo(filePath);
-                pInfo = new ProcessStartInfo
+                fInfo = new FileInfo(pInfo.FilePath);
+                pSInfo = new ProcessStartInfo
                 {
-                    Arguments = arguments,
-                    WorkingDirectory = workingDirectory != "" ? workingDirectory : fInfo.Directory.ToString(),
+                    Arguments = pInfo.Arguments,
+                    WorkingDirectory = pInfo.WorkingDirectory != string.Empty ? pInfo.WorkingDirectory : fInfo.Directory.ToString(),
                     FileName = fInfo.Name,
-                    UseShellExecute = true
+                    WindowStyle = pInfo.StartMinimized ? ProcessWindowStyle.Minimized : ProcessWindowStyle.Normal
                 };
-                mlog.Msg(String.Format("Launching {0} in {1}", pInfo.FileName, pInfo.WorkingDirectory));
-                try { return Process.Start(pInfo); } catch (Exception e) { mlog.Error(e); }
+
+                mlog.Msg(String.Format("Launching {0} in {1}", pSInfo.FileName, pSInfo.WorkingDirectory));
+                try { return Process.Start(pSInfo); } catch (Exception e) { mlog.Error(e); }
             }
             return null;
+        }
+
+        private void CloseProgram(Process p)
+        {
+            mlog.Msg("Closing " + p.ProcessName);
+            try
+            {
+                foreach (Process process in Process.GetProcessesByName(p.ProcessName)) // Close all associated Processes
+                    process.CloseMainWindow();
+            }
+            catch (InvalidOperationException)
+            {
+                mlog.Warning("Process already closed.");
+            }
+            catch (Exception e) { mlog.Error(e); }
         }
 
         private bool IsOnVR()
@@ -126,6 +131,7 @@ namespace MelonAutoLaunch
         public string FilePath { get; set; }
         public string Arguments { get; set; }
         public string WorkingDirectory { get; set; }
+        public bool StartMinimized { get; set; }
         public bool CloseOnQuit { get; set; }
         public bool VROnly { get; set; }
     }
