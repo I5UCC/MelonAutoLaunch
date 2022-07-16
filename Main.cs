@@ -26,7 +26,7 @@ namespace MelonAutoLaunch
                 if (p.VROnly && IsOnVR() || !p.VROnly)
                     current = RunProgram(p);
                 else
-                    mlog.Msg(String.Format("not launching {0}, it is tagged VR Only.", p.FilePath));
+                    mlog.Msg(ConsoleColor.Yellow, String.Format("not launching {0}, it is tagged VR Only.", p.FilePath));
 
                 if (p.CloseOnQuit && current != null)
                     ProcessesCloseOnQuit.Add(current);
@@ -69,7 +69,7 @@ namespace MelonAutoLaunch
 
             if (!File.Exists(pInfo.FilePath))
             {
-                mlog.Warning(String.Format("File '{0}' does not exist!", pInfo.FilePath));
+                mlog.Msg(ConsoleColor.Yellow, String.Format("File '{0}' does not exist!", pInfo.FilePath));
             }
             else
             {
@@ -98,7 +98,7 @@ namespace MelonAutoLaunch
             }
             catch (InvalidOperationException)
             {
-                mlog.Warning("Process already closed.");
+                mlog.Msg(ConsoleColor.Yellow, "Process already closed.");
             }
             catch (Exception e) { mlog.Error(e); }
         }
@@ -111,7 +111,7 @@ namespace MelonAutoLaunch
             }
             catch (Exception)
             {
-                mlog.Warning("No VR Device Detected, assuming its a non-VR game.");
+                mlog.Msg(ConsoleColor.Yellow, "No VR Device Detected, assuming its a non-VR game.");
                 return false;
             }
         }
