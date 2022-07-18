@@ -2,7 +2,7 @@
 A universal melonloader mod that automatically launches and closes specified external programs with the game. 
 Useful if you for example have alot of OSC programs for VRChat that you would otherwise have to open and close manually every time.
 
-Please be aware that usage of mods breaks ToS of games like VRChat and can lead to ban. Use at your own risk.
+### Please be aware that usage of mods breaks ToS of games like VRChat and can lead to ban. Use at your own risk.
 
 # Known Issues
 
