@@ -43,7 +43,7 @@ namespace MelonAutoLaunch
             }
         }
 
-        public static void CheckIfConfigFileExists()
+        private static void CheckIfConfigFileExists()
         {
             if (!File.Exists(ConfigPath))
             {
@@ -107,7 +107,7 @@ namespace MelonAutoLaunch
         {
             try
             {
-                return XRDevice.isPresent;
+                return XRDevice.isPresent || !Environment.CommandLine.Contains("no-vr");
             }
             catch (Exception)
             {
