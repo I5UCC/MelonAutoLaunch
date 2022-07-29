@@ -69,7 +69,10 @@ namespace MelonAutoLaunch
 
             if (!File.Exists(pInfo.FilePath))
             {
-                mlog.Msg(ConsoleColor.Yellow, String.Format("File '{0}' does not exist!", pInfo.FilePath));
+                if (pInfo.FilePath == "")
+                    mlog.Warning("MelonAutoLaunch hasnt been set up yet! Configure it in the [GameFolder]/UserData/AutoStartConfig.json file. For more info look into the Github Repository https://github.com/I5UCC/MelonAutoLaunch");
+                else
+                    mlog.Warning(String.Format("File '{0}' does not exist!", pInfo.FilePath));
             }
             else
             {
