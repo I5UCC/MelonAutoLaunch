@@ -64,5 +64,5 @@ Click [this link](https://melonwiki.xyz/#/?id=automated-installation) to get sta
 ### Prerequisites
 MelonLoader: v0.5.4<br>
 
-### CVR
+### CVR Disclaimer
 Me and this modification are in no affiliation with ABI and not supported by ABI.
