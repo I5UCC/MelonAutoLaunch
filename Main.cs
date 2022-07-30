@@ -110,7 +110,7 @@ namespace MelonAutoLaunch
         {
             try
             {
-                return XRDevice.isPresent || !Environment.CommandLine.Contains("no-vr");
+                return !Environment.CommandLine.Contains("no-vr") || XRDevice.isPresent;
             }
             catch (Exception)
             {
