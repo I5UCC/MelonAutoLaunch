@@ -23,7 +23,7 @@ It looks as follows:
 ```
 ***"FilePath":*** You need to add the **full path** to executable (.exe file) <br>
 ***"Arguments":*** if you need any, can leave empty.  <br>
-***"WorkingDirectory":*** is the directory of your executable by default, add a path here if needed.  <br>
+***"StartMinimized":*** determines if the program should be started minimized or normally <br>
 ***"CloseOnQuit":*** determines if the program should close whenever the game is closed. Values are either false or true.  <br>
 ***"VROnly":*** determines if the program should be autostarted only in VR or always. Values are either false or true.
 
